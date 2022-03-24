@@ -125,12 +125,12 @@ impl R1CStoQAP for LibsnarkReduction {
         let mut b = vec![F::zero(); qap_num_variables + 1];
         let mut c = vec![F::zero(); qap_num_variables + 1];
 
-        {
-            let start = 0;
-            let end = cs.num_instance_variables();
-            let num_constraints = cs.num_constraints();
-            a[start..end].copy_from_slice(&u[(start + num_constraints)..(end + num_constraints)]);
-        }
+        // {
+        //     let start = 0;
+        //     let end = cs.num_instance_variables();
+        //     let num_constraints = cs.num_constraints();
+        //     a[start..end].copy_from_slice(&u[(start + num_constraints)..(end + num_constraints)]);
+        // }
 
         for (i, u_i) in u.iter().enumerate().take(cs.num_constraints()) {
             for &(ref coeff, index) in &matrices.a[i] {
@@ -170,11 +170,11 @@ impl R1CStoQAP for LibsnarkReduction {
                 *b = evaluate_constraint(&bt_i, &full_assignment);
             });
 
-        {
-            let start = num_constraints;
-            let end = start + num_inputs;
-            a[start..end].clone_from_slice(&full_assignment[..num_inputs]);
-        }
+        // {
+        //     let start = num_constraints;
+        //     let end = start + num_inputs;
+        //     a[start..end].clone_from_slice(&full_assignment[..num_inputs]);
+        // }
 
         domain.ifft_in_place(&mut a);
         domain.ifft_in_place(&mut b);
